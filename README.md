@@ -64,8 +64,8 @@ Eshop_Search/
 ### 1. このリポジトリをクローン
 
 ```
-git clone https://github.com/kou-gin/EshopApp_DATA.git
-cd Eshop_DATA
+git clone https://github.com/kou-gin/Eshop_Search.git
+cd Eshop_Search
 ```
 ### 2. 必要なライブラリをインストール（共有サーバー向け）
 ```
