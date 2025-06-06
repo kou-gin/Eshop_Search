@@ -81,9 +81,26 @@ cp app/.env.example app/.env
 接続情報や認証情報は .env にまとめており、GitHubには含めていません。  
 .env.example を参考に、自分の環境用に .env を作成してください。
 
+アプリケーションでは `python-dotenv` を使用して `.env` を読み込んでおり、  
+**`db_connector.py` などで MySQL 接続情報として利用されています。**
+
 ### ■サーバー設置例（さくらの共用レンタルサーバー）
 ```
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]
 ```
+
+
+## 📦 サンプルデータ
+
+このアプリには、MySQL用のテーブル定義と初期データが付属しています：
+
+- `create_tables.sql`：テーブル構造（categories, eshops）
+- `sample_data.sql`：カテゴリ・飲食店の初期データ
+
+ローカル環境でMySQLに取り込む場合は以下のように実行します：
+
+```bash
+mysql -u youruser -p yourdb < create_tables.sql
+mysql -u youruser -p yourdb < sample_data.sql
