@@ -1,6 +1,7 @@
 # Eshop_Search
 
-Eshop_Search は、地域・カテゴリ・店名で飲食店を検索・管理できる個人向けブックマークWebアプリです。自分のお気に入り飲食店をブラウザから素早く探せるよう設計されています。
+Eshop_Search は、地域・カテゴリ・店名で飲食店を検索・管理できる個人向けブックマークWebアプリです。  
+自分のお気に入り飲食店をブラウザから素早く探せるよう設計されています。  
 
 ---
 
@@ -38,6 +39,8 @@ Eshop_Search は、地域・カテゴリ・店名で飲食店を検索・管理�
 ---
 
 ## 📂 ディレクトリ構成
+
+```
 Eshop_Search/
 ├── app/
 │ ├── app.py
@@ -52,8 +55,7 @@ Eshop_Search/
 ├── .gitignore
 ├── .htaccess
 └── index.cgi
-
-
+```
 
 ---
 
@@ -61,19 +63,27 @@ Eshop_Search/
 
 ### 1. このリポジトリをクローン
 
-```bash
+```
 git clone https://github.com/kou-gin/EshopApp_DATA.git
 cd Eshop_DATA
-
-2. 必要なライブラリをインストール（共有サーバー向け）
+```
+### 2. 必要なライブラリをインストール（共有サーバー向け）
+```
 pip install -r requirements.txt --target=app/lib
-
-3. .env を作成
+```
+### 3. .env を作成
+```
 cp app/.env.example app/.env
 # 中身を編集して Basic認証用のIDとパスを設定
+```
+## 環境変数の設定
 
+接続情報や認証情報は .env にまとめており、GitHubには含めていません。  
+.env.example を参考に、自分の環境用に .env を作成してください。
 
-■サーバー設置例（さくらの共用レンタルサーバー）
+### ■サーバー設置例（さくらの共用レンタルサーバー）
+```
 RewriteEngine On
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule ^(.*)$ index.cgi/$1 [QSA,L]
+```
