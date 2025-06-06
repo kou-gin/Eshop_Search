@@ -1,0 +1,121 @@
+<!-- templates/view/umain.html -->
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" 
+        href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
+        crossorigin="anonymous">
+  <!-- カスタムCSS -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+  <title>飲食店検索</title>
+</head>
+<body>
+  <div class="container mt-5">
+
+    <button type="button" class="btn btn-info mb-3" data-toggle="modal" data-target="#howToSearchModal">
+      検索方法
+    </button>
+
+
+    <form action="{{ url_for('main') }}" method="post" class="bg-light p-4 rounded shadow">
+      <h1 class="text-center mb-4">飲食店検索</h1>
+
+
+      <div class="form-group mt-3">
+        <label for="search_location">地域:</label>
+        <input type="text" class="form-control" name="searchLocation" value="{{searchLocation}}">
+      </div>
+
+      <div class="form-group">
+        <label for="search_shop">店舗名:</label>
+        <input type="text" class="form-control" name="searchShop" value="{{ searchShop }}">
+      </div> 
+
+      <div class="form-group">
+        <label for="search_category_id">カテゴリ:</label>
+        <select class="form-control" name="searchCategoryId">
+          <option value="">-- 全て --</option>
+          {% for cid, cname in category_list %}
+            <option value="{{ cid }}" {% if searchCategoryId == cid|string %}selected{% endif %}>{{ cname }}</option>
+          {% endfor %}
+        </select>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-block">検索</button>
+    </form>
+    <br>
+    {% if es and es.list and es.list|length > 0 %}
+      <p>全{{ es.total_count }}件が見つかりました。</p>
+      <div class="table-responsive">
+        <table class="table table-bordered table-striped">
+          <thead class="thead-dark">
+            <tr>
+              <th scope="col">地域</th>
+              <th scope="col">店名</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for e in es.list %}
+              <tr>
+                <td>{{ e.location }}</td>
+                <td>
+                  <a href="{{ e.detail }}" target="_blank" rel="noopener noreferrer">
+                    {{ e.shop }}
+                  </a>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="modal fade" id="howToSearchModal" tabindex="-1" role="dialog" aria-labelledby="howToSearchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="howToSearchModalLabel">検索方法</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="閉じる">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p><strong>【全件】</strong><br>└地域、店舗名は空欄<br>　カテゴリは--全て--</p>
+          <p><strong>【地域】</strong><br>└「○○都」<br>└「○○区」「東京都○○区」<br>└「○○」「港区○○」</p>
+          <p><strong>【店舗名】</strong><br>└「○○カフェ」<br>※店舗名の一部でも検索可能。<br>その場合他店舗も検索される。</p>
+          <p><strong>【カテゴリ】</strong><br>└カテゴリの中から選択</p>
+          <p><strong>以下検索可能：</strong><br>
+          ・地域のみ<br>
+          ・店名のみ<br>
+          ・カテゴリのみ<br>
+          ・地域＋店舗名<br>
+          ・地域＋カテゴリ<br>
+          ・地域＋カテゴリ＋店名</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">閉じる</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+          integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+          crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+          integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9gBoJ4l3Q1JRq6xQ4BJ4SFlbF3kWlKEapT9ed"
+          crossorigin="anonymous"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+          integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+          crossorigin="anonymous"></script>
+</body>
+<footer class="text-center py-3 bg-light">
+  <p class="mb-0">©︎ 2025 Eshop_Search. All rights reserved.</p>
+</footer>
+</html>

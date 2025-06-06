@@ -1,0 +1,20 @@
+# Pythonキャッシュ
+__pycache__/
+
+# ログファイル
+app/log/
+
+# サーバー用ライブラリ
+app/lib/
+
+# 環境変数（認証情報）
+app/.env
+
+# エディタ・OS関連
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Apache設定（必要に応じて除外）
+.htaccess
+app/templates/manage/.htaccess
